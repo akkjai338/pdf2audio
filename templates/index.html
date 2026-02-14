@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF2Audio</title>
+</head>
+<body style="background:#111;color:white;text-align:center;padding:50px;font-family:Arial;">
+    <h1>PDF2Audio</h1>
+    <p>Upload your PDF and convert to audio</p>
+
+    <form action="/convert" method="post" enctype="multipart/form-data">
+        <input type="file" name="pdf_file" accept=".pdf" required><br><br>
+
+        <select name="language">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+        </select><br><br>
+
+        <button type="submit">Convert</button>
+    </form>
+</body>
+</html>
