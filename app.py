@@ -30,8 +30,8 @@ def convert():
 
     # If user uploaded PDF
     elif file:
-        unique_id = str(uuid.uuid4())
-        pdf_path = os.path.join(UPLOAD_FOLDER, unique_id + ".pdf")
+        unique_id_pdf = str(uuid.uuid4())
+        pdf_path = os.path.join(UPLOAD_FOLDER, unique_id_pdf + ".pdf")
         file.save(pdf_path)
 
         reader = PdfReader(pdf_path)
@@ -45,11 +45,11 @@ def convert():
     if extracted_text.strip() == "":
         return "No readable text found"
 
-    # Limit text length (important for free server)
+    # Limit text length
     extracted_text = extracted_text[:5000]
 
-    unique_id = str(uuid.uuid4())
-    audio_path = os.path.join(AUDIO_FOLDER, unique_id + ".mp3")
+    unique_id_audio = str(uuid.uuid4())
+    audio_path = os.path.join(AUDIO_FOLDER, unique_id_audio + ".mp3")
 
     tts = gTTS(text=extracted_text, lang=language)
     tts.save(audio_path)
