@@ -18,28 +18,40 @@ def home():
 
 @app.route("/convert", methods=["POST"])
 def convert():
-    file = request.files["pdf_file"]
     language = request.form.get("language")
+    text = request.form.get("text")
+    file = request.files.get("pdf_file")
 
-    if not file:
-        return "No file uploaded"
+    extracted_text = ""
 
-    unique_id = str(uuid.uuid4())
-    pdf_path = os.path.join(UPLOAD_FOLDER, unique_id + ".pdf")
-    audio_path = os.path.join(AUDIO_FOLDER, unique_id + ".mp3")
+    # If user entered text
+    if text and text.strip() != "":
+        extracted_text = text
 
-    file.save(pdf_path)
+    # If user uploaded PDF
+    elif file:
+        unique_id = str(uuid.uuid4())
+        pdf_path = os.path.join(UPLOAD_FOLDER, unique_id + ".pdf")
+        file.save(pdf_path)
 
-    reader = PdfReader(pdf_path)
-    text = ""
-    for page in reader.pages:
-        if page.extract_text():
-            text += page.extract_text()
+        reader = PdfReader(pdf_path)
+        for page in reader.pages:
+            if page.extract_text():
+                extracted_text += page.extract_text()
 
-    if text.strip() == "":
+    else:
+        return "Please enter text or upload a PDF"
+
+    if extracted_text.strip() == "":
         return "No readable text found"
 
-    tts = gTTS(text=text, lang=language)
+    # Limit text length (important for free server)
+    extracted_text = extracted_text[:5000]
+
+    unique_id = str(uuid.uuid4())
+    audio_path = os.path.join(AUDIO_FOLDER, unique_id + ".mp3")
+
+    tts = gTTS(text=extracted_text, lang=language)
     tts.save(audio_path)
 
     return send_file(audio_path, as_attachment=True)
