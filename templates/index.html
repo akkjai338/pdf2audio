@@ -4,18 +4,36 @@
     <title>PDF2Audio</title>
 </head>
 <body style="background:#111;color:white;text-align:center;padding:50px;font-family:Arial;">
+
     <h1>PDF2Audio</h1>
-    <p>Upload your PDF and convert to audio</p>
+    <p>Convert Text or PDF to Audio</p>
 
     <form action="/convert" method="post" enctype="multipart/form-data">
-        <input type="file" name="pdf_file" accept=".pdf" required><br><br>
 
+        <h3>Enter Text (Optional)</h3>
+        <textarea name="text" rows="8" cols="50"
+        placeholder="Type or paste your text here..."></textarea>
+
+        <br><br>
+
+        <h3>OR Upload PDF (Optional)</h3>
+        <input type="file" name="pdf_file" accept=".pdf">
+
+        <br><br>
+
+        <h3>Select Language</h3>
         <select name="language">
             <option value="en">English</option>
             <option value="hi">Hindi</option>
-        </select><br><br>
+        </select>
 
-        <button type="submit">Convert</button>
+        <br><br>
+
+        <button type="submit">Convert to Audio</button>
+
     </form>
+
+    <p style="margin-top:20px;">Max 5000 characters (Free version limit)</p>
+
 </body>
 </html>
