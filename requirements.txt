@@ -1,4 +1,4 @@
 flask
 PyPDF2
-gTTS
+edge-tts
 gunicorn
